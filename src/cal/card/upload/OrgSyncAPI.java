@@ -12,7 +12,7 @@ public class OrgSyncAPI {
         if(list != null) {
             for(int i = 0; i < list.size(); i++) {    
                 Object[] test = (Object[]) list.get(i);
-                String email_address = test[3].toString().replace("@email.com", "@com-email");
+                String email_address = test[3].toString().replace("@calu.edu", "@california-university-of-pennsylvania");
                 String calcard_number = test[0].toString().substring(6,22);
                 String osid = URLConnection.getOSID(email_address);
                 if(osid != null) {
