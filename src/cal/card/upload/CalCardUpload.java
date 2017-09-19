@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class CalCardUpload {
             
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         //convert timestamp to user friendly format
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yy 'at' h:mm:ss a");
                
@@ -29,7 +29,7 @@ public class CalCardUpload {
         URLConnection.setAPIKey(settings.getAPIkey());
 
         //parse XML by getting the latest XML file in the directory stated
-        ArrayList parsedXML = ReadXMLFile.load();   
+        ArrayList<String[]> parsedXML = ReadXMLFile.load();   
         
         //use email address from XML file to get OSID, then upload CardNumber
         OrgSyncAPI.upload(parsedXML);

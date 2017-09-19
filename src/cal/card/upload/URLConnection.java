@@ -10,8 +10,10 @@ public class URLConnection {
     
     public static String key = null;
     
-    public static String getOSID(String username) {
-        try {            
+    public static String getOSID(String username) 
+    {
+        try 
+        {            
             URL u = new URL("https://api.orgsync.com/api/v2/accounts/username/"+username+"?key="+key);
             HttpURLConnection c = (HttpURLConnection) u.openConnection();
             c.setRequestMethod("GET");
@@ -22,40 +24,52 @@ public class URLConnection {
             c.setReadTimeout(60000);
             c.connect();
             int status = c.getResponseCode();
-            String response = c.getResponseMessage();
-            
-            switch (status) {
+            switch (status) 
+            {
                 case 200:
                 case 201:
                     BufferedReader br = new BufferedReader(new InputStreamReader(c.getInputStream()));
                     StringBuilder sb = new StringBuilder();
                     String line;
-                    while ((line = br.readLine()) != null) {
+                    while ((line = br.readLine()) != null) 
+                    {
                         sb.append(line+"\n");
                     }
                     br.close();
                     JSONObject json;
-                    try {
+                    try 
+                    {
                         json = (JSONObject)new JSONParser().parse(sb.toString());
                         return json.get("id").toString();
-                    } catch (ParseException ex) {
+                    } 
+                    catch (ParseException ex) 
+                    {
                         return null;
                     }
             }
-            
             c.disconnect();
             
-        } catch (MalformedURLException ex) {
+        } 
+        catch (MalformedURLException e) 
+        {
+        	System.out.println("Error while getting OSID number!");
+        	System.out.println("Malformed URL Exception: \n" + e.getMessage());
             return null;
-        } catch (IOException ex) {
+        } 
+        catch (IOException e) 
+        {
+        	System.out.println("Error while getting OSID number!");
+        	System.out.println("IO Exception: \n" + e.getMessage());
             return null;
         }
         return null;
     }
     
     
-    public static int updateCardNumber(String osid, String cardnumber) {
-        try {
+    public static int updateCardNumber(String osid, String cardnumber) 
+    {
+        try 
+        {
             URL url = new URL("https://api.orgsync.com/api/v2/identification_cards?account_id="+osid+"&number="+cardnumber+"&key="+key);           
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setDoOutput(false);
@@ -68,14 +82,24 @@ public class URLConnection {
             
             return status;
     
-        } catch (MalformedURLException ex) {
+        } 
+        catch (MalformedURLException e) 
+        {
+        	System.out.println("Error while updating card number!");
+        	System.out.println("Malformed URL Exception: \n" + e.getMessage());
+        	
             return 0;
-        } catch (IOException ex) {
+        } 
+        catch (IOException e) 
+        {
+        	System.out.println("Error while updating card number!");
+        	System.out.println("IO Exception: \n" + e.getMessage());
             return 0;
         }
     }
     
-    public static void setAPIKey(String apikey) {
+    public static void setAPIKey(String apikey) 
+    {
         key = apikey;
     }
 }
